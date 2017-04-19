@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+
+<div class="ball"></div>
+
+<script>
+    var ball = document.getElementsByClassName('ball')[0];
+    ball.style.backgroundColor="red";
+    ball.style.borderRadius="50%";
+    ball.style.width="100px";
+    ball.style.height="100px";
+    ball.style.position="absolute";
+    ball.style.left="10px";
+    ball.style.top="50px";
+    ball.style.transition="1s ease";
+
+    ball.y = 0;
+    function moveBall() {
+        ball.y ++
+        ball.style.top = ball.y+'px';
+    }
+    setInterval(moveBall, 1)
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

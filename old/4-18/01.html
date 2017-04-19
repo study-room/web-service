@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<script>
+
+
+    var List = function () {
+        this.items = [];
+        this.$view = $('<ul class="todo-list"></ul>');
+        this.$toolView = $(`
+            <form>
+            <input type="button" name="clearDone" value="clearDone">
+            <input type="button" name="clearAll" value="clearAll">
+            <input type="button" name="doAll" value="doAll">
+            <input type="button" name="add" value="">
+</form>
+        `)
+
+
+        this.$view.appendTo('body');
+        this.render();
+
+        var self = this;
+        this.$view.on('click', function(e){
+            var $li = $(e.target).closest.tagName == "li";
+            if($li.length == 1){
+                var itemIndex = $li.data('itemIndex');
+                self.toggle(itemIndex);
+            }
+        })
+
+        this.$toolView.find('[name=clearDone]').click(this.clearDone.bind(this));
+
+    }
+    List.prototype.add = function (text) {
+        this.items.push({text, data: new Date(), done: false});
+
+    }
+    List.prototype.toggle = function (itemIndex) {
+        var item = this.items[itemIndex];
+        item.done = !item.done;
+        return this;
+    }
+    List.prototype.render = function () {
+        this.$view.empty();
+        this.$view.append(
+                this.items.map((item, index) => {
+                    return $(`
+                        <li data-item-index=${index}>
+                        <input type="checkbox" ${item.done ? "checked" : ""}>
+                        ${item.text}
+                        </li>
+                        `);
+                })
+        )
+    }
+    List.prototype.clearDone = function(){
+        this.items = this.items.filter(item => item.done == !item.done);
+        this.render();
+    }
+
+    List.prototype.clearAll = function(){
+        this.items = [];
+        this.render();
+    }
+
+    List.prototype.doAll = function(){
+        this.items = this.items.forEach(item => {
+            item.done = true;
+        })
+        this.render();
+    }
+
+    List.prototype.undoAll = function(){
+        this.items = this.items.forEach(item => {
+            item.done = false;
+        })
+        this.render();
+    }
+
+
+
+
+    var list = new List();
+    list.add('askjdksjdksjd');
+    list.add('askjdksjdksjd');
+    list.add('askjdksjdksjd');
+    list.add('askjdksjdksjd');
+
+
+</script>
+
+
+</body>
+</html>

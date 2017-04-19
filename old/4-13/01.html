@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h4>Click below items</h4>
+<ul>
+    <li index="1" some-value="a">list item 1</li>
+    <li index="2" some-value="b">list item 2</li>
+    <li index="3" some-value="c">list item 3</li>
+    <li index="4" some-value="d">list item 4</li>
+    <li index="5" some-value="e">list item 5</li>
+</ul>
+
+<style>
+    * {
+        font-size: 1.5rem;
+    }
+</style>
+
+<script>
+    var $ul = document.getElementsByTagName('ul')[0];
+    $ul.addEventListener('click', selectEvent);
+
+    function selectEvent(e) {
+        console.log(e.target);
+        if(e.target.tagName == 'LI'){
+            var $head4 = document.getElementsByTagName('h4')[0];
+            var index = e.target.getAttribute('index');
+            var value = e.target.getAttribute('some-value');
+            $head4.innerText = `Item ${index} clicked, ${value}`;
+            if (index % 2 == 0) {
+                e.target.style.backgroundColor = 'yellow';
+            } else {
+                e.target.style.backgroundColor = 'white';
+            }
+        }
+
+    }
+</script>
+
+
+</body>
+</html>

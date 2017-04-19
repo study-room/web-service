@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="con1" style="background: pink; width: 500px; height: 500px; margin: 10px;"></div>
+<div id="con1" style="background: blue; width: 500px; height: 500px; margin: 10px;"></div>
+
+<script>
+    /*
+     * 모델링의 원칙 1. 의인화를 잘 해야한다.
+     * rendering = 실제로 물체를 찍어내서 보여주는 행위
+     * model = data
+     *
+     * view = 보여지는것 (껍데기)
+     *
+     * */
+
+    var Ball = function () {
+        //data
+        this.width = 10;
+        this.height = 10;
+        this.x = 10;
+        this.y = 10;
+        this.vx = 10;
+        this.vy = 10;
+
+        //view
+        this.$view = document.createElement('div');
+        this.$view.style.borderRadius = '50%';
+        this.$view.style.width = this.width + 'px';
+        this.$view.style.height = this.height + 'px';
+        this.$view.style.position = 'absolute';
+        this.$view.style.background = 'black';
+
+        this.setState({x: 10, y: 10, vx: 10, vy: 10});
+    }
+
+    Ball.prototype.getView = function () {
+        return this.$view;
+    }//$view를 은닉하는 목적과 getView가 더 의미적으로 맞기 때문에..
+
+    Ball.prototype.getState = function () {
+        return {
+            x: this.x,
+            y: this.y,
+            vx: this.vx,
+            vy: this.vy,
+        }
+    }
+
+    Ball.prototype.setState = function (state) {
+        x = state.x;
+        y = state.y;
+        vx = state.vx;
+        vy = state.vy;
+
+        //view
+        this.$view.style.left = this.x + 'px';
+        this.$view.style.top = this.y + 'px';
+    }
+
+    Ball.prototype.render = function () {
+        this.$view.style.left = this.x + 'px';
+        this.$view.style.top = this.y + 'px';
+    }
+
+    Ball.prototype.render = function (containerRenderer) {
+        var nextState = containerRenderer(state);
+        this.x = nextState.x;
+        this.y = nextState.y;
+        this.vx = nextState.vx;
+        this.vy = nextState.vy;
+    }
+
+
+    var Container = function ($view) {
+        //element 타입앞에 $를 붙인다.
+        this.$view = $view; //Element 타입입
+        this.objects = [];
+    };
+
+    Container.protopype.getSize = function () {
+        //element = clientWidth를 가지고 있다.
+        return {
+            width: this.$view.clientWidth,
+            height: this.$view.clientHeight,
+        }//사이즈가 변경되는 것도 고려해서 메서드로 구현
+    };
+    Container.protopype.appendBall = function (object) {
+        //data
+        this.balls.push(object);
+
+        //view
+        this.view.appendChild(object.getView());//getter 속성을 은닉하기 위한 함수
+
+        /*
+         * Ball의 $view라는 속성은 Element type이다.
+         * */
+    };
+    Container.protopype.render = function () {
+        var size = this.getSize();
+        this.objects.forEach((object) => {
+            var state = object.getState();
+            var newState = {
+                x: state.x + state.vx,
+                y: state.y + state.vy,
+                vx: state.vx,
+                vy: state.vy,
+            }
+
+            //collision
+            if (newState.x < 0) {
+                newState.x = 0;
+                newState.vx *= -1;
+            } else if (newState.y > size.height) {
+                newState.y = size
+
+            }
+
+
+            object.setState(newState);
+        })
+    };
+    Container.protopype.start = function () {
+        //model을 컨트롤
+        if (!this.timer) {
+            this.timer = setInterval(this.timer.bind(this), 100);
+        }
+
+    };
+    Container.protopype.stop = function () {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    };
+    var con1 = new Container(document.getElementById('con1'));
+    con1.start();
+
+
+    /*
+     var box = document.getElementsByClassName('box')[0];
+
+     var Ball = function (container, x, y, vx, vy)
+     {
+     this.container = container;
+     // container.getBounds() == { width:, height:, ..}
+     // container.append(this);
+     this.color = randomRGB();
+     this.x = x || randomN(bound.width);
+     this.y = y || randomN(bound.height);
+     this.vx = vx || randomN(100) - 50;
+     this.vy = vy || randomN(100) -50;
+     container.append(this);
+
+     }
+     Ball.prototype.move = function () {
+     var bounds = this.container.getBounds();
+     if (this.x >= bounds.width) {
+     this.x = bounds.Width;
+     this.vx *= -1;
+
+     }else if(this.x <= 0){
+     this.x = 0;
+     this.vx *= -1;
+     this.color = reandomRGB();
+     }
+     };
+
+     var Container = function(element) {
+
+     };
+
+     Container.prototype.getBounds = function
+
+     Ball.prototype.changeColor = function () {
+
+     }
+     */
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+
+<body>
+<div class="bbs1">
+    <h1 class="bbs-title">title</h1>
+    <div class="bbs-article">
+        <h2 class="bbs-article-title"></h2>
+        <p class="bbs-article-text"></p>
+        <span class="bbs-article-author"></span>
+    </div>
+    <ul class="bbs-articles">
+        <li class="bbs-articles-item">
+            <span class="bbs-articles-author"></span>
+        </li>
+
+    </ul>
+
+</div>
+
+<script>
+    class Article {
+        constructor(author, title, text) {
+            this.author = author;
+            this.title = title;
+            this.text = text;
+            this.id = Article.id++;
+        }
+    }
+    Article.id = 1;
+
+    class Board {
+        constructor(title) {
+            this.title = title || '무제';
+            this.articles = [];
+            this.currentArticle = null;
+
+        }
+
+        write(author, title, text) {
+            var article = new Article(author, title, text);
+            this.articles.puch(article);
+        }
+
+        findArticleIndexById(id) {
+            return this.articles.findIndex(article => article.id = id)
+        }
+
+        delete(id) {
+            this.articles.splice(
+                    findArticleIndexById(id),
+                    1
+            );
+            if(id == this.currentArticle && index == this.currentArticl.index){
+                this.currentArticle.index == null;
+            }
+            this.articles.splice(index,1);
+        }
+
+        read(id) {
+            var index = this.findArticleIndexById(id);
+            this.currentArticle = this.articles[index];
+        }
+
+        print(){
+            var result = `${this.title}\n=============================`;
+            if(!this.currentArticleIndex){
+                var article =
+            }
+            console.log(result);
+        }
+
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

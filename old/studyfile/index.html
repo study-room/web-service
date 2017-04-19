@@ -1,0 +1,45 @@
+<html>
+<body>
+
+<div id="some-id">div#some-id</div>
+<div class="some-class">
+    div.some-class
+    <div class="some2-class">
+        div.some-class.some2-class
+    </div>
+</div>
+<form name="form1">
+    <p>form[name=form1] > p</p>
+    <input type="text" name="text1">
+    <input type="password" name="pass1">
+</form>
+
+<script>
+    var some = document.getElementById('some-id');
+    some.style.backgroundColor = "red";
+    some.textContent = '조동민';
+    some.style.color="#fff";
+    some.style.fontSize="30px";
+    some.innerText = '조동민';
+    some.innerHTML = '<h1>나나나나</h1>';//퍼포먼스 나쁨
+
+    var some2 = document.getElementsByClassName('some-class')[0];
+//    some2.childNodes[0].textContent="12345677";
+    console.log(some2.childNodes[0])
+
+    var newElement = document.createElement('p');
+    newElement.textContent=" Hello World!!";
+    newElement.style.color="blue";
+    newElement.style.fontSize="30px";
+
+    some2.prepend(newElement);
+    some2.append(newElement);
+
+
+
+
+
+</script>
+
+</body>
+</html>

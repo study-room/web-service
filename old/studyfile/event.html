@@ -1,0 +1,24 @@
+<body>
+<div id="box1" style="width:500px; height:500px; background: red; "></div>
+
+<script>
+    var box1 = document.getElementById('box1');
+    function mouse_down(e){
+        console.log(e);
+    }
+    function mouse_over(e){
+        this.style.backgroundColor = 'pink';
+    }
+    function mouse_leave(e){
+        this.style.backgroundColor = 'red';
+        this.removeEventListener('mouseover', mouse_over);
+        this.removeEventListener('mouseleave', mouse_leave);
+    }
+    box1.addEventListener('mousedown', mouse_down);
+    box1.addEventListener('mouseover', mouse_over);
+    box1.addEventListener('mouseleave', mouse_leave);
+
+
+
+</script>
+</body>

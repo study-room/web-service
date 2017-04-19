@@ -1,0 +1,25 @@
+<body>
+<script>
+    class Module {
+        //가계부
+        constructor(){
+            this.handlers = []; // [{type: '', function(){}}]
+        }
+
+        addHandler(type, handler){
+            this.handlers.push({type,handler});
+
+        }
+        deposit(name, amount){
+            //...
+            var e = {name, amount};
+            this.handlers
+                    .filter(handler => handler.type == )
+
+        }
+
+    }
+
+</script>
+
+</body>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+
+
+
+
+<div class="bbs" id="bbs1">
+    <h1 class="bbs-title"></h1>
+    <div class="bbs-article">
+        <h3 class="bbs-article-title"></h3>
+        <p class="bbs-article-text"></p>
+    </div>
+    <ul class="bbs-articles">
+        <li class="bbs-articles-item"></li>
+    </ul>
+</div>
+
+<script>/*
+    (function(window){
+        window
+    })(window);*/
+
+    class Article {
+        constructor(title, text){
+            this.title = title;
+            this.text = text;
+            this.id = Article.id++;
+
+        }
+    }
+    Article.id = 1;
+
+    class Board {
+        constructor(title, viewElementId){
+            this.title = title;
+            this.articles = [];
+            this.currentArticleId = null;
+
+            //load views
+            var $script = document.getElementById(viewElementId);
+            var $template = document.createElement('div');
+            this.$view = {};
+            this.$views.title: this.$view.getElementsByClassName('bbs-title')[0];
+            this.$views.article: this.$view.getElementsByClassName('bbs-article')[0];
+            this.$views.article.title: this.$view.getElementsByClassName('bbs-article-title')[0];
+            this.$views.article.text: this.$view.getElementsByClassName('bbs-article-text')[0];
+            this.$views.articles: this.$view.getElementsByClassName('bbs-articles-item')[0];
+            var articlesItem = this.$views.articles.getElementsByClassName('bbs-articles')[0];
+            this.$views.articles.itemTemplate = articlesItem.clineNode(true);
+            this.$views.articles.removeChild(articlesItem);
+
+            this.render();
+        }
+
+        read(articleId){
+            this.currentArticleId = articleId;
+            this.render();
+        }
+
+
+        delete(articleId){
+            var index =this.articles.findIndex(article => article.id == articleId)
+            this.articles.splice(index, 1);
+            this.render();
+
+        }
+
+        write(title, text){
+            this.articles.push(new Article(title, text));
+            this.render();
+
+        }
+
+        render(){
+            //board title
+            this.$views.title.innderText = this.title;
+
+            //current article
+            if(this.currentArticleId){
+                var article = this.articles.find(article => article.id == this.currentArticleId);
+
+            }
+        }
+
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>
